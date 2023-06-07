@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/969.717137db.chunk.js","mappings":"kHAGA,UAHe,WACX,OAAO,IACX,C","sources":["webpack://container/./src/components/Settings/index.tsx"],"sourcesContent":["var Settings = function () {\n    return null;\n};\nexport default Settings;\n"],"names":[],"sourceRoot":""}
