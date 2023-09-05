@@ -70,7 +70,7 @@ const BirthdayCard: FC<IBirthdayCardProps> = ({ user }) => {
 							'&:hover': { backgroundColor: 'transparent' },
 						}}
 						component={Link}
-						to={`/chat/${user.id}`}
+						to={`/chat/${user.authUserId}`}
 					>
 						{t('congratulate')}
 					</Button>
