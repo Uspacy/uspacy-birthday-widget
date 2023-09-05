@@ -29,7 +29,7 @@ const Title = styled(Typography)(({ theme }) => ({
 }));
 
 const BirthdayWidget: FC = () => {
-	const { t } = useTranslation('container-frontend');
+	const { t } = useTranslation();
 	const [users, setUsers] = useState<IUser[]>([]);
 	useEffect(() => {
 		(async () => {
