@@ -18,10 +18,6 @@ i18n.use(initReactI18next)
 	)
 	.init({
 		fallbackLng: 'uk',
-		react: {
-			useSuspense: true,
-			bindI18n: 'languageChanged',
-		},
 	});
 
 export default i18n;
