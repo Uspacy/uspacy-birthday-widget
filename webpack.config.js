@@ -95,6 +95,22 @@ module.exports = {
 					requiredVersion: deps['@emotion/styled'],
 					singleton: true,
 				},
+				'@uspacy/store': {
+					requiredVersion: deps['@uspacy/store'],
+					singleton: true,
+				},
+				'@uspacy/sdk': {
+					requiredVersion: deps['@uspacy/sdk'],
+					singleton: true,
+				},
+				'@reduxjs/toolkit': {
+					requiredVersion: deps['@reduxjs/toolkit'],
+					singleton: true,
+				},
+				'react-redux': {
+					requiredVersion: deps['react-redux'],
+					singleton: true,
+				},
 			},
 		}),
 		new Dotenv(),
