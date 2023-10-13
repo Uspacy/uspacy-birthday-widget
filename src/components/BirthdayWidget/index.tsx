@@ -1,13 +1,11 @@
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import React, { FC, useEffect, useState } from 'react';
+import { useAppSelector } from '@uspacy/store';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { API_PREFIX_COMPANY } from '../../const';
-import { uspacyApi } from '../../helpers/api';
-import { usersDb, usersSortedBirthdays } from '../../helpers/users';
-import { IUser } from '../../models/user';
+import { usersSortedBirthdays } from '../../helpers/users';
 import BirthdayCard from './BirthdayCard';
 
 const Container = styled(Box)(({ theme }) => ({
@@ -30,16 +28,10 @@ const Title = styled(Typography)(({ theme }) => ({
 
 const BirthdayWidget: FC = () => {
 	const { t } = useTranslation();
-	const [users, setUsers] = useState<IUser[]>([]);
-	useEffect(() => {
-		(async () => {
-			const cachedUsers = await usersDb.getItem('data');
-			if (Array.isArray(cachedUsers)) return setUsers(cachedUsers);
-			const { data } = await uspacyApi.get<{ data: IUser[] }>(`${API_PREFIX_COMPANY}/users`).catch(() => ({ data: { data: [] } }));
-			setUsers(data.data);
-		})();
-	}, []);
+	const { data: users, loading } = useAppSelector((state) => state.users);
 	const usersArray = usersSortedBirthdays(users);
+
+	if (loading || !usersArray.length) return null;
 
 	return (
 		<Container>

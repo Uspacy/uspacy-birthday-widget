@@ -6,6 +6,8 @@
     "@emotion/react": "11.11.0",
     "@emotion/styled": "11.11.0",
     "@mui/material": "5.10.17",
+    "@uspacy/sdk": "^0.0.18",
+    "@uspacy/store": "^0.0.22",
     "axios": "1.4.0",
     "date-fns": "2.30.0",
     "dotenv-webpack": "8.0.1",

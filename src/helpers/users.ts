@@ -1,6 +1,6 @@
-import { IUser } from '../models/user';
+import { IUser } from '@uspacy/sdk/lib/models/user';
+
 import { IUserSettings } from '../models/userSettings';
-import { getOrCreateTable } from './db';
 
 export const getFormattedUserName = (user: IUser, userSettings: IUserSettings): string => {
 	const nameFormat = userSettings?.nameFormat || 'first-last';
@@ -21,8 +21,6 @@ export const getFormattedUserName = (user: IUser, userSettings: IUserSettings): 
 			return user?.firstName || user?.lastName ? `${user?.firstName || ''} ${user?.lastName || ''}` : 'User';
 	}
 };
-
-export const usersDb = getOrCreateTable('users');
 
 export const usersSortedBirthdays = (users: IUser[]) => {
 	const usersWithBirthday = users.filter((el) => el?.birthday);
