@@ -24,7 +24,7 @@ const CardContainer = styled(Box)(() => ({
 
 const BirthdayCard: FC<IBirthdayCardProps> = ({ user }) => {
 	const { userSettings } = useUserSettingsContext();
-	const { t, i18n } = useTranslation('container-frontend');
+	const { t, i18n } = useTranslation();
 	const theme = useTheme();
 	const [buttonHidden, setButtonHidden] = useState(true);
 	const [currentLocale, setCurrentLocale] = useState<Locale>(null);
