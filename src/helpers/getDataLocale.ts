@@ -16,6 +16,10 @@ export const getDataLocale = async (code) => {
 			const { default: locale } = await import('date-fns/locale/pl');
 			return locale;
 		}
+		case 'es-ES': {
+			const { default: locale } = await import('date-fns/locale/es');
+			return locale;
+		}
 		default: {
 			const { default: locale } = await import('date-fns/locale/en-US');
 			return locale;
