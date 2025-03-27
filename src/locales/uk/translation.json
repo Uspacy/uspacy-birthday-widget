@@ -1,5 +1,20 @@
 {
   "birthdays": "Дні народження",
   "today": "Сьогодні",
-  "congratulate": "Привітати"
+  "congratulate": "Привітати",
+  "tomorrow": "Завтра",
+  "next": "Наступні",
+  "nextActivities": "Найближчі справи",
+  "nextEventIn": "Наступна подія через",
+  "minutes": "хв",
+  "noActivitiesMessage": "Тут відображатимуться справи, заплановані на найближчий час.",
+  "noActivitiesCTA": "Створіть справу просто зараз!",
+  "addActivity": "Додати справу",
+  "priority": {
+    "low": "Низький",
+    "neutral": "Нейтральний",
+    "notHigh": "Середній",
+    "high": "Високий",
+    "veryHigh": "Дуже високий"
+  }
 }
