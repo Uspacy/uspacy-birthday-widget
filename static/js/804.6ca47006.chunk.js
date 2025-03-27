@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcontainer=self.webpackChunkcontainer||[]).push([[804],{5804:function(e){e.exports=JSON.parse('{"birthdays":"Aniversários","today":"Hoje","congratulate":"Parabenizar"}')}}]);
