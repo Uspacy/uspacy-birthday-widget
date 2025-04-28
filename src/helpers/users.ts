@@ -69,7 +69,7 @@ export const usersSortedBirthdays = (users: IUser[]) => {
 	});
 
 	const usersArray = () => {
-		if (todayBirthdayUsersArray.length <= 2) {
+		if (todayBirthdayUsersArray.length <= 2 && !!todayBirthdayUsersArray.length) {
 			return [...todayBirthdayUsersArray, ...otherDays.slice(0, 3 - todayBirthdayUsersArray.length)];
 		}
 
