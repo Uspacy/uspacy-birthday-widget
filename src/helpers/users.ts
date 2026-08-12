@@ -1,6 +1,7 @@
 import { IUser } from '@uspacy/sdk/lib/models/user';
 
 import { IUserSettings } from '../models/userSettings';
+import { getBirthdayDate } from './date';
 
 export const getFormattedUserName = (user: IUser, userSettings: IUserSettings): string => {
 	const nameFormat = userSettings?.nameFormat || 'first-last';
@@ -28,10 +29,10 @@ export const usersSortedBirthdays = (users: IUser[]) => {
 	const sortedUsers = usersWithBirthday
 		.filter((user) => user.active)
 		.sort((a, b) => {
-			const aMonth = new Date(+a.birthday * 1000).getMonth();
-			const bMonth = new Date(+b.birthday * 1000).getMonth();
-			const aDay = new Date(+a.birthday * 1000).getDate();
-			const bDay = new Date(+b.birthday * 1000).getDate();
+			const aMonth = getBirthdayDate(a.birthday).getMonth();
+			const bMonth = getBirthdayDate(b.birthday).getMonth();
+			const aDay = getBirthdayDate(a.birthday).getDate();
+			const bDay = getBirthdayDate(b.birthday).getDate();
 
 			if (aMonth === bMonth) {
 				return aDay - bDay;
@@ -41,8 +42,8 @@ export const usersSortedBirthdays = (users: IUser[]) => {
 		});
 
 	const filteredUsers = sortedUsers.filter((user) => {
-		const userBirhdayMonth = new Date(user.birthday * 1000).getMonth();
-		const userBirhdayDate = new Date(user.birthday * 1000).getDate();
+		const userBirhdayMonth = getBirthdayDate(user.birthday).getMonth();
+		const userBirhdayDate = getBirthdayDate(user.birthday).getDate();
 
 		if (userBirhdayMonth >= new Date().getMonth()) {
 			if (userBirhdayMonth === new Date().getMonth()) {
@@ -57,15 +58,17 @@ export const usersSortedBirthdays = (users: IUser[]) => {
 		const currentMonth = new Date().getMonth();
 		const currentDate = new Date().getDate();
 
-		if (new Date(user.birthday * 1000).getMonth() === currentMonth) {
-			return new Date(user.birthday * 1000).getDate() === currentDate;
+		if (getBirthdayDate(user.birthday).getMonth() === currentMonth) {
+			return getBirthdayDate(user.birthday).getDate() === currentDate;
 		}
 	});
 
 	const otherDays = filteredUsers.filter((user) => {
+		const currentMonth = new Date().getMonth();
 		const currentDate = new Date().getDate();
+		const birthdayDate = getBirthdayDate(user.birthday);
 
-		return new Date(user.birthday * 1000).getDate() !== currentDate;
+		return birthdayDate.getMonth() !== currentMonth || birthdayDate.getDate() !== currentDate;
 	});
 
 	const usersArray = () => {
