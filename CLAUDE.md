@@ -48,11 +48,10 @@ yarn build           # production build -> dist/ (remoteEntry.js + static/js); t
 - **Merge to `main` = live in production for every portal at once.** `pages.yml` runs `npm install && npm run build`
   and pushes `dist/` to the `gh-pages` branch; `../container-frontend` (`src/components/BirthdayWidget/index.tsx`)
   loads `https://uspacy.github.io/uspacy-birthday-widget` at runtime — no version, no package, no stage, no rollback
-  except reverting on `main`. If the remote fails to load, the container silently renders nothing.
+  except a PR that reverts the change. If the remote fails to load, the container silently renders nothing.
 - CI installs with **npm**, not yarn (`package-lock.json` is gitignored), so production may resolve different
   versions than `yarn.lock`. This is intentional — do not switch it to yarn. Pin new dependencies to exact versions.
 - `@uspacy/store` / `@uspacy/sdk` are much older than the container's; leave them as is unless asked.
-- PR review: an approval from anyone in `@Uspacy/uspacy-frontend-owners` is enough.
 - **Contracts with `container-frontend` — do not change without the developer's explicit approval:**
   - `appName = 'UspacyBirthdayWidget'`, `filename: 'remoteEntry.js'`, exposed key `./app`, output dir `dist`,
     the Pages URL. Renaming any of them breaks the widget on every portal.
@@ -76,6 +75,8 @@ yarn build           # production build -> dist/ (remoteEntry.js + static/js); t
 - `nextActivities`, `noActivities*`, `priority.*` etc. in our locale files are `activities-widget`'s keys left from
   the shared instance; unused here. Remove them only when asked.
 - `strictNullChecks` and `noImplicitAny` are off, so tsc will not catch null/undefined bugs.
+- **`main` changes only through a PR** — never merge or push into `main` locally. Rollback = a PR that reverts the
+  original one (GitHub "Revert" button); never a reset or force-push of `main`.
 - **Never commit or push without the developer's explicit confirmation** — ask every time, even after earlier approvals.
 - **Never force-push** (`--force`, `--force-with-lease`, `+refspec`). If a push is rejected, stop and ask the developer.
 - **Always commit the normal way.** Never skip or disable git hooks: no `--no-verify` / `-n` (incl. combined flags like
