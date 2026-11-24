@@ -1,6 +1,7 @@
 import { IUser } from '@uspacy/sdk/lib/models/user';
 
 import { IUserSettings } from '../models/userSettings';
+import { getDaysOrder } from './date';
 
 export const getFormattedUserName = (user: IUser, userSettings: IUserSettings): string => {
 	const nameFormat = userSettings?.nameFormat || 'first-last';
@@ -22,63 +23,20 @@ export const getFormattedUserName = (user: IUser, userSettings: IUserSettings): 
 	}
 };
 
+const VISIBLE_USERS_COUNT = 3;
+
 export const usersSortedBirthdays = (users: IUser[]) => {
-	const usersWithBirthday = users.filter((el) => el?.birthday);
+	const today = new Date();
 
-	const sortedUsers = usersWithBirthday
-		.filter((user) => user.active)
-		.sort((a, b) => {
-			const aMonth = new Date(+a.birthday * 1000).getMonth();
-			const bMonth = new Date(+b.birthday * 1000).getMonth();
-			const aDay = new Date(+a.birthday * 1000).getDate();
-			const bDay = new Date(+b.birthday * 1000).getDate();
+	const sortedUsers = users
+		.filter((user) => !!user?.birthday && user.active)
+		.sort((a, b) => getDaysOrder(a.birthday, today) - getDaysOrder(b.birthday, today));
 
-			if (aMonth === bMonth) {
-				return aDay - bDay;
-			}
+	const todayBirthdayUsersArray = sortedUsers.filter((user) => getDaysOrder(user.birthday, today) === 0);
 
-			return aMonth - bMonth;
-		});
+	if (todayBirthdayUsersArray.length >= VISIBLE_USERS_COUNT) {
+		return todayBirthdayUsersArray;
+	}
 
-	const filteredUsers = sortedUsers.filter((user) => {
-		const userBirhdayMonth = new Date(user.birthday * 1000).getMonth();
-		const userBirhdayDate = new Date(user.birthday * 1000).getDate();
-
-		if (userBirhdayMonth >= new Date().getMonth()) {
-			if (userBirhdayMonth === new Date().getMonth()) {
-				return userBirhdayDate >= new Date().getDate();
-			} else {
-				return user;
-			}
-		}
-	});
-
-	const todayBirthdayUsersArray = filteredUsers.filter((user) => {
-		const currentMonth = new Date().getMonth();
-		const currentDate = new Date().getDate();
-
-		if (new Date(user.birthday * 1000).getMonth() === currentMonth) {
-			return new Date(user.birthday * 1000).getDate() === currentDate;
-		}
-	});
-
-	const otherDays = filteredUsers.filter((user) => {
-		const currentDate = new Date().getDate();
-
-		return new Date(user.birthday * 1000).getDate() !== currentDate;
-	});
-
-	const usersArray = () => {
-		if (todayBirthdayUsersArray.length <= 2 && !!todayBirthdayUsersArray.length) {
-			return [...todayBirthdayUsersArray, ...otherDays.slice(0, 3 - todayBirthdayUsersArray.length)];
-		}
-
-		if (todayBirthdayUsersArray.length >= 3) {
-			return todayBirthdayUsersArray;
-		}
-
-		return filteredUsers.slice(0, 3);
-	};
-
-	return usersArray();
+	return sortedUsers.slice(0, VISIBLE_USERS_COUNT);
 };

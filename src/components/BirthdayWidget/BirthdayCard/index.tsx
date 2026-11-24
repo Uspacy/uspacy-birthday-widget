@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useUserSettingsContext } from '../../../context/UserSettings';
+import { getBirthdayDate } from '../../../helpers/date';
 import { getDataLocale } from '../../../helpers/getDataLocale';
 import { getFormattedUserName } from '../../../helpers/users';
 import { ReactComponent as CalendarIcon } from '../../../static/images/calendar.svg';
@@ -36,7 +37,7 @@ const BirthdayCard: FC<IBirthdayCardProps> = ({ user }) => {
 		})();
 	}, [i18n?.language]);
 
-	const birthdayDate = new Date(user.birthday * 1000);
+	const birthdayDate = getBirthdayDate(user.birthday);
 	const now = new Date();
 	const birthday = format(birthdayDate, 'dd MMMM', { locale: currentLocale });
 	const isToday = birthdayDate.getMonth() === now.getMonth() && birthdayDate.getDate() === now.getDate();
